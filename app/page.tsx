@@ -1,66 +1,56 @@
-export default function Home() {
+"use client";
+
+import { useState } from "react";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import app from "../../firebase";
+
+export default function SignupPage() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const auth = getAuth(app);
+
+  const handleSignup = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert("Signup Successful");
+    } catch (error) {
+      alert("Error creating account");
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center bg-black text-white">
 
-      {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-800">
+      <div className="bg-gray-900 p-10 rounded-3xl w-[350px] shadow-2xl">
 
-        <h1 className="text-3xl font-bold text-green-400">
-          TradeSpot
+        <h1 className="text-3xl font-bold mb-6 text-center text-green-400">
+          Signup
         </h1>
 
-        <div className="flex gap-6 items-center">
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-gray-800 outline-none"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-          <a href="#home" className="hover:text-green-400">
-            Home
-          </a>
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-gray-800 outline-none"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <a href="#plans" className="hover:text-green-400">
-            Plans
-          </a>
-
-          <a href="#about" className="hover:text-green-400">
-            About
-          </a>
-
-          <a href="#contact" className="hover:text-green-400">
-            Contact
-          </a>
-
-          <a href="/login" className="hover:text-green-400">
-            Login
-          </a>
-
-          <a
-            href="/signup"
-            className="bg-green-500 text-black px-4 py-2 rounded-xl font-semibold"
-          >
-            Signup
-          </a>
-
-        </div>
-
-      </nav>
-
-      {/* Hero */}
-      <section className="flex flex-col items-center justify-center text-center py-32 px-6">
-
-        <h1 className="text-6xl font-bold">
-          Smart Trading
-          <span className="text-green-400">
-            {" "}Shared Profits
-          </span>
-        </h1>
-
-        <p className="text-gray-400 mt-6 max-w-2xl">
-          Invest with confidence through our market-focused trading platform.
-        </p>
-
-        <button className="mt-10 bg-green-500 hover:bg-green-600 text-black px-8 py-4 rounded-2xl font-bold">
-          Start Investing
+        <button
+          onClick={handleSignup}
+          className="w-full bg-green-500 hover:bg-green-600 text-black py-3 rounded-xl font-bold"
+        >
+          Signup
         </button>
 
-      </section>
+      </div>
 
     </div>
   );
